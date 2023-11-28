@@ -1,48 +1,62 @@
 YouTube video link: https://youtu.be/8Uofkq718n8
 All the commands that are executed in the above youtube video are mentioned in this gist. 
 
-1. Install Apache server on Ubuntu
+1. Install Apache server on Ubuntu-
 sudo apt install apache2
 
-2. Install php runtime and php mysql connector
+2. Install php runtime and php mysql connector-
 sudo apt install php libapache2-mod-php php-mysql
 
-3. Install MySQL server
+3. Install MySQL server-
 sudo apt install mysql-server 
 
-4. Login to MySQL server
+4. Login to MySQL server-
 sudo mysql -u root
 
-5. Change authentication plugin to mysql_native_password (change the password to something strong)
+5. Change authentication plugin to mysql_native_password (change the password to something strong)-
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'Testpassword@123';
 
-6. Create a new database user for wordpress (change the password to something strong)
+6. Create a new database user for wordpress (change the password to something strong)-
 CREATE USER 'wp_user'@localhost IDENTIFIED BY 'Testpassword@123';
 
-7. Create a database for wordpress
+7. Create a database for wordpress-
 CREATE DATABASE wp;
 
-8. Grant all privilges on the database 'wp' to the newly created user
+8. Grant all privilges on the database 'wp' to the newly created user-
 GRANT ALL PRIVILEGES ON wp.* TO 'wp_user'@localhost;
 
-9. Download wordpress
+9. Download wordpress-
 cd /tmp
 wget https://wordpress.org/latest.tar.gz
 
-10. Unzip
+10. Unzip-
 tar -xvf latest.tar.gz
 
-11. Move wordpress folder to apache document root
+11. Move wordpress folder to apache document root-
 sudo mv wordpress/ /var/www/html
 
-12. Command to restart/reload apache server
+12. Command to restart/reload apache server-
 sudo systemctl restart apache2
 OR
 sudo systemctl reload apache2
 
-13. Install certbot
+13. Install certbot-
 sudo apt-get update
 sudo apt install certbot python3-certbot-apache
 
-14. Request and install ssl on your site with certbot
+14. Request and install ssl on your site with certbot-
 sudo certbot --apache
+---------------------trouble shooting------------
+    if FTP id and password asked in the time of theme or plugin installation then go to
+    wp-config.php and add the line --> define('FS_METHOD', 'direct');
+
+    if you see XMLReader Support Missing then
+     sudo apt-get install php-xml
+     sudo service apache2 restart
+
+    If you see this error in aws cURL Support Missing then
+     sudo apt-get update
+     sudo apt-get install php-curl
+     sudo service apache2 restart
+
+
